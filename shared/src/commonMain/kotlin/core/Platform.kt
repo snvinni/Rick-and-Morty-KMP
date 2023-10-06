@@ -1,3 +1,5 @@
+package core
+
 enum class Platform {
     ANDROID,
     WASM

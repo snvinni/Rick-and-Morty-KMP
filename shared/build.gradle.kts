@@ -34,12 +34,25 @@ kotlin {
                 api(compose.foundation)
                 api(compose.ui)
                 api(compose.material)
+
+                implementation("io.ktor:ktor-client-core:2.3.3-wasm0")
             }
         }
 
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
 
-        val wasmMain by getting
+                // view model
+                api("io.ktor:ktor-client-okhttp:2.3.3")
+                api("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
+            }
+        }
+
+        val wasmMain by getting {
+            dependencies {
+                dependsOn(commonMain)
+            }
+        }
     }
 }
 
