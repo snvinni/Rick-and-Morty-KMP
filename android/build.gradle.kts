@@ -1,7 +1,7 @@
 plugins {
-    id("org.jetbrains.compose")
-    id("com.android.application")
-    kotlin("android")
+    alias(libs.plugins.compose.multiplatform.wasm)
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
 }
 
 java {
@@ -41,11 +41,6 @@ dependencies {
     implementation(project(":shared"))
 
     // Compose
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("androidx.activity:activity-compose:1.7.0")
-
-    // Test
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("com.android.support.test:runner:1.0.2")
-    androidTestImplementation("com.android.support.test.espresso:espresso-core:3.0.2")
+    implementation(libs.appcompat)
+    implementation(libs.activity.compose)
 }

@@ -1,0 +1,25 @@
+[versions]
+kotlin = "1.9.0"
+android-gradle-plugin = "8.1.0"
+compose-multiplatfrom-wasm = "1.4.0-dev-wasm09"
+ktor-wasm = "2.3.3-wasm0"
+ktor = "2.3.3"
+appcompat = "1.6.1"
+
+[libraries]
+ktor-core-wasm = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor-wasm" }
+ktor-http = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
+
+lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-ktx", version = "2.4.0" }
+
+activity-compose = { group = "androidx.activity", name = "activity-compose", version = "1.7.0" }
+
+appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+
+[plugins]
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+
+android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
+android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
+compose-multiplatform-wasm = { id = "org.jetbrains.compose", version.ref = "compose-multiplatfrom-wasm" }
