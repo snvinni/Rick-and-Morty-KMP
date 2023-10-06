@@ -14,7 +14,7 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version "0.5.0"
 }
 
-rootProject.name = "KMP-WasmAndAndroid"
+rootProject.name = "RickAndMorty-KMP"
 
 include(":shared")
 include(":android")
