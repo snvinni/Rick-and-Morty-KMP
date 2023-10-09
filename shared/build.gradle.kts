@@ -1,9 +1,9 @@
 import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
 
 plugins {
-    kotlin("multiplatform")
-    id("com.android.library")
-    id("org.jetbrains.compose")
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.compose.multiplatform.wasm)
 }
 
 group = "org.example"
@@ -35,7 +35,7 @@ kotlin {
                 api(compose.ui)
                 api(compose.material)
 
-                implementation("io.ktor:ktor-client-core:2.3.3-wasm0")
+                api(libs.ktor.core.wasm)
             }
         }
 
@@ -43,8 +43,8 @@ kotlin {
             dependencies {
 
                 // view model
-                api("io.ktor:ktor-client-okhttp:2.3.3")
-                api("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0")
+                api(libs.ktor.http)
+                api(libs.lifecycle.viewmodel.ktx)
             }
         }
 
