@@ -1,14 +1,14 @@
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.window.CanvasBasedWindow
-import ui.App
-import ui.TestViewModel
+import feature.home.HomeScreen
+import feature.home.HomeViewModel
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
 
-    val viewModel = TestViewModel()
+    val viewModel = HomeViewModel()
 
     CanvasBasedWindow("Test") {
-        App(viewModel)
+        HomeScreen(viewModel)
     }
 }

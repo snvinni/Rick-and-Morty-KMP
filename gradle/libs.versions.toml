@@ -2,11 +2,16 @@
 kotlin = "1.9.0"
 android-gradle-plugin = "8.1.0"
 compose-multiplatfrom-wasm = "1.4.0-dev-wasm09"
+kotlinx-coroutines-core-wasm = "1.7.2-wasm0"
+kotlinx-serialization-json = "1.5.2-wasm0"
 ktor-wasm = "2.3.3-wasm0"
 ktor = "2.3.3"
 appcompat = "1.6.1"
 
 [libraries]
+kotlinx-coroutines-core-wasm = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-wasm", version.ref = "kotlinx-coroutines-core-wasm" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
+
 ktor-core-wasm = { group = "io.ktor", name = "ktor-client-core", version.ref = "ktor-wasm" }
 ktor-http = { group = "io.ktor", name = "ktor-client-okhttp", version.ref = "ktor" }
 
