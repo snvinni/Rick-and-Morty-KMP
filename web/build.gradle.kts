@@ -30,3 +30,8 @@ kotlin {
 compose.experimental {
     web.application {}
 }
+
+compose {
+    kotlinCompilerPlugin.set("1.4.0-dev-wasm09")
+    kotlinCompilerPluginArgs.add("suppressKotlinVersionCompatibilityCheck=1.9.0")
+}

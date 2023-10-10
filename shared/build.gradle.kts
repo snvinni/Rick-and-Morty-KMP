@@ -7,9 +7,6 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-group = "org.example"
-version = "1.0-DEV"
-
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(17))
@@ -21,6 +18,8 @@ java {
 kotlin {
 
     androidTarget()
+
+    jvm("desktop")
 
     wasm {
         browser()
@@ -38,21 +37,32 @@ kotlin {
                 api(compose.materialIconsExtended)
                 api(compose.components.resources)
 
+                // Serialization
                 api(libs.kotlinx.serialization.json)
+
+                // Ktor
                 api(libs.ktor.core.wasm)
             }
         }
 
+        val wasmMain by getting
+
         val androidMain by getting {
             dependencies {
-
-                // view model
+                // Ktor
                 api(libs.ktor.http)
+
+                // Lifecycle
                 api(libs.lifecycle.viewmodel.ktx)
             }
         }
 
-        val wasmMain by getting
+        val desktopMain by getting {
+            dependencies {
+                // Compose
+                api(compose.desktop.common)
+            }
+        }
     }
 }
 
