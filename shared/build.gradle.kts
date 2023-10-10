@@ -1,4 +1,8 @@
 import org.jetbrains.compose.ExperimentalComposeLibrary
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
+
+group = "com.example.shared"
+version = "1.0-SNAPSHOT"
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -14,7 +18,7 @@ java {
     }
 }
 
-@OptIn(ExperimentalComposeLibrary::class)
+@OptIn(ExperimentalComposeLibrary::class, ExperimentalWasmDsl::class)
 kotlin {
 
     androidTarget()
@@ -49,6 +53,7 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
+
                 // Ktor
                 api(libs.ktor.http)
 
@@ -59,6 +64,13 @@ kotlin {
 
         val desktopMain by getting {
             dependencies {
+
+                // Ktor
+                api(libs.ktor.http)
+
+                // slf4j
+                api("org.slf4j:slf4j-simple:1.7.32")
+
                 // Compose
                 api(compose.desktop.common)
             }

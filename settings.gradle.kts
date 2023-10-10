@@ -19,3 +19,4 @@ rootProject.name = "RickAndMorty-KMP"
 include(":shared")
 include(":android")
 include(":web")
+include(":desktop")

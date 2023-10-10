@@ -5,6 +5,9 @@ plugins {
     alias(libs.plugins.compose.multiplatform.wasm)
 }
 
+group = "com.example.web"
+version = "1.0-SNAPSHOT"
+
 @OptIn(ExperimentalWasmDsl::class)
 kotlin {
 
