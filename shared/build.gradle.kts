@@ -37,7 +37,6 @@ kotlin {
                 api(compose.material)
 
                 api(libs.kotlinx.serialization.json)
-                api(libs.kotlinx.coroutines.core.wasm)
                 api(libs.ktor.core.wasm)
             }
         }
