@@ -1,4 +1,4 @@
-package core
+package core.util
 
 sealed class Resource<out T, out E> {
 
@@ -43,7 +43,7 @@ fun <T, E, E2> Resource<T, E>.mapError(
     Resource.Loading -> Resource.Loading
 }
 
-fun <T, E, E2> Resource.Result<T, E>.mapError(
+inline fun <T, E, E2> Resource.Result<T, E>.mapError(
     transform: (E) -> E2
 ) = when (this) {
     is Resource.Result.Failure -> Resource.Result.Failure(transform(error))

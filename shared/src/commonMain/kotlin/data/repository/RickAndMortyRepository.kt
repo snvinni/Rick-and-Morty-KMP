@@ -1,13 +1,16 @@
-package data
+package data.repository
 
-import core.Resource
-import core.mapError
-import core.mapSuccess
+import core.util.Resource
+import core.util.mapError
+import core.util.mapSuccess
 import data.service.RickAndMortyService
 import domain.model.Characters
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import org.jetbrains.compose.resources.ExperimentalResourceApi
 
+
+@OptIn(ExperimentalResourceApi::class)
 class RickAndMortyRepository(
     private val service: RickAndMortyService = RickAndMortyService()
 ) {

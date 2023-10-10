@@ -1,7 +1,7 @@
 package data.service
 
-import core.Resource
-import core.toResource
+import core.util.Resource
+import core.util.toResource
 import data.response.CharactersResponse
 import io.ktor.client.*
 import io.ktor.client.request.*
@@ -12,7 +12,7 @@ class RickAndMortyService(private val client: HttpClient = HttpClient()) {
 
     private val json = Json { ignoreUnknownKeys = true }
 
-    suspend fun getCharacters(page : Int): Resource.Result<CharactersResponse, Throwable> {
+    suspend fun getCharacters(page: Int): Resource.Result<CharactersResponse, Throwable> {
 
         return runCatching {
             val response = client.get("https://rickandmortyapi.com/api/character") {

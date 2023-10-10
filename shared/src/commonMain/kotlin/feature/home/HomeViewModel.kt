@@ -1,8 +1,8 @@
 package feature.home
 
-import core.BaseViewModel
-import core.Resource
-import data.RickAndMortyRepository
+import core.viewmodel.BaseViewModel
+import core.util.Resource
+import data.repository.RickAndMortyRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 
@@ -11,7 +11,7 @@ class HomeViewModel(
 ) : BaseViewModel() {
 
     val characters = rickAndMortyRepository.getCharacters(page = 1).stateIn(
-        scope = viewModelScope,
+        scope = scope,
         started = SharingStarted.WhileSubscribed(),
         initialValue = Resource.Loading
     )

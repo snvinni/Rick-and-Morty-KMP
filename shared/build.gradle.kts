@@ -1,4 +1,4 @@
-import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
+import org.jetbrains.compose.ExperimentalComposeLibrary
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -17,7 +17,7 @@ java {
     }
 }
 
-@OptIn(ExperimentalWasmDsl::class)
+@OptIn(ExperimentalComposeLibrary::class)
 kotlin {
 
     androidTarget()
@@ -35,6 +35,8 @@ kotlin {
                 api(compose.foundation)
                 api(compose.ui)
                 api(compose.material)
+                api(compose.materialIconsExtended)
+                api(compose.components.resources)
 
                 api(libs.kotlinx.serialization.json)
                 api(libs.ktor.core.wasm)
@@ -50,15 +52,13 @@ kotlin {
             }
         }
 
-        val wasmMain by getting {
-            dependencies {
-                dependsOn(commonMain)
-            }
-        }
+        val wasmMain by getting
     }
 }
 
 android {
     namespace = "org.example.shared"
     compileSdk = 33
+
+    // sourceSets["main"].resources.srcDirs("src/commonMain/resources")
 }

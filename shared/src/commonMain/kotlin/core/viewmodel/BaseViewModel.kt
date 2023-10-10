@@ -1,7 +1,7 @@
-package core
+package core.viewmodel
 
 import kotlinx.coroutines.CoroutineScope
 
 expect open class BaseViewModel() {
-    val viewModelScope: CoroutineScope
+    val scope: CoroutineScope
 }

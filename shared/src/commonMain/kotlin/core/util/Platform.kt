@@ -1,4 +1,4 @@
-package core
+package core.util
 
 enum class Platform {
     ANDROID,
