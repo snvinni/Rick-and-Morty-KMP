@@ -2,7 +2,8 @@ package core.util
 
 enum class Platform {
     ANDROID,
-    WASM
+    WASM,
+    DESKTOP
 }
 
 expect fun getPlatform(): Platform

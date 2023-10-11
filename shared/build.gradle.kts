@@ -1,4 +1,8 @@
 import org.jetbrains.compose.ExperimentalComposeLibrary
+import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
+
+group = "com.example.shared"
+version = "1.0-SNAPSHOT"
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -7,9 +11,6 @@ plugins {
     kotlin("plugin.serialization")
 }
 
-group = "org.example"
-version = "1.0-DEV"
-
 java {
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(17))
@@ -17,10 +18,12 @@ java {
     }
 }
 
-@OptIn(ExperimentalComposeLibrary::class)
+@OptIn(ExperimentalComposeLibrary::class, ExperimentalWasmDsl::class)
 kotlin {
 
     androidTarget()
+
+    jvm("desktop")
 
     wasm {
         browser()
@@ -38,21 +41,40 @@ kotlin {
                 api(compose.materialIconsExtended)
                 api(compose.components.resources)
 
+                // Serialization
                 api(libs.kotlinx.serialization.json)
+
+                // Ktor
                 api(libs.ktor.core.wasm)
             }
         }
 
+        val wasmMain by getting
+
         val androidMain by getting {
             dependencies {
 
-                // view model
+                // Ktor
                 api(libs.ktor.http)
+
+                // Lifecycle
                 api(libs.lifecycle.viewmodel.ktx)
             }
         }
 
-        val wasmMain by getting
+        val desktopMain by getting {
+            dependencies {
+
+                // Ktor
+                api(libs.ktor.http)
+
+                // slf4j
+                api("org.slf4j:slf4j-simple:1.7.32")
+
+                // Compose
+                api(compose.desktop.common)
+            }
+        }
     }
 }
 

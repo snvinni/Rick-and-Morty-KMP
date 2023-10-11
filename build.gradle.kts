@@ -4,11 +4,8 @@ plugins {
     alias(libs.plugins.android.application) apply false
     alias(libs.plugins.android.library) apply false
     alias(libs.plugins.compose.multiplatform.wasm) apply false
-    kotlin("plugin.serialization") version "1.9.0" apply false
+    alias(libs.plugins.kotlin.serialization) apply false
 }
-
-group = "org.example"
-version = "1.0-DEV"
 
 allprojects {
     repositories {

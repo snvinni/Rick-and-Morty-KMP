@@ -2,6 +2,7 @@
 kotlin = "1.9.0"
 android-gradle-plugin = "8.1.0"
 compose-multiplatfrom-wasm = "1.4.0-dev-wasm09"
+compose = "1.4.0"
 kotlinx-serialization-json = "1.5.2-wasm0"
 ktor-wasm = "2.3.3-wasm0"
 ktor = "2.3.3"
@@ -18,6 +19,7 @@ lifecycle-viewmodel-ktx = { group = "androidx.lifecycle", name = "lifecycle-view
 activity-compose = { group = "androidx.activity", name = "activity-compose", version = "1.7.0" }
 
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+compose-ui = { module = "androidx.compose.ui:ui-graphics", version.ref = "compose" }
 
 [plugins]
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
@@ -26,3 +28,4 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 android-application = { id = "com.android.application", version.ref = "android-gradle-plugin" }
 android-library = { id = "com.android.library", version.ref = "android-gradle-plugin" }
 compose-multiplatform-wasm = { id = "org.jetbrains.compose", version.ref = "compose-multiplatfrom-wasm" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

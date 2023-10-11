@@ -41,7 +41,9 @@ fun HomeScreen(viewModel: HomeViewModel) {
 
                         ImageRequest(
                             url = it.image,
-                            modifier = Modifier.size(100.dp).padding(4.dp),
+                            modifier = Modifier
+                                .size(100.dp)
+                                .padding(4.dp),
                         )
                     }
                 }
