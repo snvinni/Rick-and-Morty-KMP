@@ -36,7 +36,11 @@ class MainActivity : ComponentActivity() {
                             name = "Earth",
                             url = "https://rickandmortyapi.com/api/location/1"
                         ),
-                        url = "https://rickandmortyapi.com/api/character/1"
+                        url = "https://rickandmortyapi.com/api/character/1",
+                        episodes = listOf(
+                            Character.Episode("https://rickandmortyapi.com/api/episode/1"),
+                            Character.Episode("https://rickandmortyapi.com/api/episode/2")
+                        )
                     ),
                     modifier = Modifier.fillMaxSize()
                 )

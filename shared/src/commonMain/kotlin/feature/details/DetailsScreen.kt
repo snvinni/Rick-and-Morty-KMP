@@ -3,14 +3,18 @@ package feature.details
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import core.designSystem.BodyStyle
 import core.designSystem.LinkColor
@@ -19,6 +23,7 @@ import core.designSystem.SubTitleStyle
 import core.util.ImageRequest
 import domain.model.Character
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun DetailsScreen(
     character: Character,
@@ -54,13 +59,13 @@ fun DetailsScreen(
         Arrangement.spacedBy(8.dp)
     ) {
 
-        Section(title = "Basics", Modifier.fillMaxSize()) {
+        Section(title = "Basics", Modifier.fillMaxWidth()) {
 
             Text("Specie: ${character.species}")
             Text("Gender: ${character.gender}")
         }
 
-        Section(title = "Locations", Modifier.fillMaxSize()) {
+        Section(title = "Locations", Modifier.fillMaxWidth()) {
             Location(
                 type = "Origin",
                 character.location,
@@ -72,6 +77,36 @@ fun DetailsScreen(
                 character.location,
                 action
             )
+        }
+
+        Section(
+            title = "Episodes",
+            Modifier.fillMaxWidth(),
+        ) {
+            LazyRow {
+                items(character.episodes) { episode ->
+                    Card(
+                        shape = CircleShape,
+                        modifier = Modifier.size(28.dp),
+                        onClick = {
+                            action(
+                                DetailsAction.OpenEpisode(
+                                    episode.url
+                                )
+                            )
+                        }
+                    ) {
+                        Box(contentAlignment = Alignment.Center) {
+                            Text(
+                                episode.number.toString(),
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
+
+                    Spacer(Modifier.width(4.dp))
+                }
+            }
         }
     }
 
@@ -89,7 +124,7 @@ fun Section(
 
         Text(title, style = SubTitleStyle)
 
-        Spacer(Modifier.height(4.dp))
+        Spacer(Modifier.height(8.dp))
 
         content()
     }
