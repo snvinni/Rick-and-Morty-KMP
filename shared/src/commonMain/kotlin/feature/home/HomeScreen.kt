@@ -18,7 +18,7 @@ import core.util.navigation.Action
 @Composable
 fun HomeScreen(
     onAction: (Action) -> Unit,
-    viewModel: HomeViewModel = HomeViewModel()
+    viewModel: HomeViewModel = provideHomeViewModel()
 ) {
 
     val resultState = viewModel.characters.collectAsState()

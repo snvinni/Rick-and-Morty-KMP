@@ -1,7 +1,8 @@
 package feature.home
 
-import core.viewmodel.BaseViewModel
+import androidx.compose.runtime.Composable
 import core.util.Resource
+import core.viewmodel.BaseViewModel
 import data.repository.RickAndMortyRepository
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
@@ -16,3 +17,6 @@ class HomeViewModel(
         initialValue = Resource.Loading
     )
 }
+
+@Composable
+expect fun provideHomeViewModel() : HomeViewModel

@@ -57,6 +57,9 @@ kotlin {
                 // Compose
                 api("androidx.compose.ui:ui-tooling-preview:1.4.0")
 
+                // For Compose
+                api("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0")
+
                 // Ktor
                 api(libs.ktor.http)
 
