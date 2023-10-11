@@ -1,4 +1,4 @@
-package core.component
+package core.util
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.twotone.BrokenImage
-import androidx.compose.material.icons.twotone.Image
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
@@ -24,8 +23,6 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import core.extension.toImageBitmap
-import core.util.Resource
-import core.util.toResource
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.client.statement.*
@@ -35,10 +32,8 @@ private val httpClient by lazy { HttpClient() }
 @Composable
 fun ImageRequest(
     url: String,
-    failure: Painter = rememberVectorPainter(
-        image = Icons.TwoTone.BrokenImage,
-    ),
     modifier: Modifier = Modifier,
+    failure: Painter = rememberVectorPainter(Icons.TwoTone.BrokenImage),
     shape: Shape = RectangleShape,
     contentDescription: String? = null,
     colorFilter: ColorFilter? = null,

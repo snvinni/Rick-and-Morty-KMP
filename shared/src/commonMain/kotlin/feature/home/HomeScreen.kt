@@ -12,7 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import core.component.ImageRequest
+import core.util.ImageRequest
 import core.util.Resource
 
 @Composable
