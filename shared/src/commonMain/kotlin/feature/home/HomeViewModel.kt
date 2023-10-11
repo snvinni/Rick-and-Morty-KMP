@@ -1,5 +1,6 @@
 package feature.home
 
+import core.util.Resource
 import core.viewmodel.BaseViewModel
 import data.repository.RickAndMortyRepository
 import domain.model.Character
@@ -12,10 +13,33 @@ class HomeViewModel(
     private val rickAndMortyRepository: RickAndMortyRepository = RickAndMortyRepository()
 ) : BaseViewModel() {
 
-    private val currentPageFlow = MutableStateFlow(1)
-    val characterListFlow = MutableStateFlow(emptyList<Character>())
-    val loadingType = MutableStateFlow<LoadingType>(LoadingType.FirstPage)
+    private val currentPage = MutableStateFlow(1)
+    private val characterList = MutableStateFlow(emptyList<Character>())
+    private val loadingType = MutableStateFlow<LoadingType>(LoadingType.FirstPage)
     private val loadError = MutableStateFlow("")
+
+    val uiState = combine(
+        currentPage,
+        characterList,
+        loadingType,
+        loadError,
+    ) { currentPage, characterList, loadingType, loadError ->
+        HomeUiState(
+            characterList = characterList,
+            loadingType = loadingType,
+            loadError = loadError,
+            currentPage = currentPage
+        )
+    }.stateIn(
+        scope = scope,
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = HomeUiState(
+            characterList = emptyList(),
+            loadingType = LoadingType.FirstPage,
+            loadError = "",
+            currentPage = 1
+        )
+    )
 
     private val pagination = Paginator(
         initialPage = 1,
@@ -28,15 +52,15 @@ class HomeViewModel(
             ).last()
         },
         getNextPage = {
-            if (it.info.next == null) return@Paginator currentPageFlow.value
-            currentPageFlow.value + 1
+            if (it.info.next == null) return@Paginator currentPage.value
+            currentPage.value + 1
         },
         onSuccess = { itemList, newPage ->
-            characterListFlow.update { it + itemList.results }
-            currentPageFlow.update { newPage }
+            characterList.update { it + itemList.results }
+            currentPage.update { newPage }
         },
-        onError = { error ->
-            loadError.update { error ?: "" }
+        onError = { _ ->
+            loadingType.update { LoadingType.Error }
         },
     )
 
@@ -45,12 +69,29 @@ class HomeViewModel(
     }
 
     fun loadCharacters() {
+        if (currentPage.value != 1) {
+            loadingType.update { LoadingType.NextPage }
+        }
+
         scope.launch {
             pagination.requestItems()
         }
+    }
+
+    fun refresh() {
+        characterList.value = emptyList()
+        pagination.reset()
+        loadCharacters()
     }
 
     fun onItemClick(i: Int) {
         TODO("Not yet implemented")
     }
 }
+
+data class HomeUiState(
+    val characterList: List<Character>,
+    val loadingType: LoadingType,
+    val loadError: String,
+    val currentPage: Int,
+)

@@ -6,4 +6,6 @@ sealed interface LoadingType {
     data object NextPage : LoadingType
 
     data object Done : LoadingType
+
+    data object Error : LoadingType
 }

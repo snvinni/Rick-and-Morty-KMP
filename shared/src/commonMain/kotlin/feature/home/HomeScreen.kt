@@ -2,31 +2,30 @@ package feature.home
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import feature.character.components.CharacterContent
+import core.component.CharacterContent
 
 
 @Composable
 fun HomeScreen(viewModel: HomeViewModel) {
+    val uiState = viewModel.uiState.collectAsState().value
+
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
     ) {
         CharacterContent(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            characters = viewModel.characterListFlow.collectAsState().value,
+                .fillMaxSize(),
+            characters = uiState.characterList,
             onItemClick = viewModel::onItemClick,
-            loadingType = viewModel.loadingType.collectAsState().value,
-            loadMore = viewModel::loadCharacters
+            loadingType = uiState.loadingType,
+            loadMore = viewModel::loadCharacters,
+            refresh = viewModel::refresh
         )
-
     }
 }

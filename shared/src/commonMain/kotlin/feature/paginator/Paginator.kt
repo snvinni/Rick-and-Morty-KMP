@@ -14,6 +14,7 @@ class Paginator<Data>(
     private var isMakingRequest = false
     suspend fun requestItems() {
         isMakingRequest = true
+        onLoadUpdated(if (currentPage == 1) LoadingType.FirstPage else LoadingType.NextPage)
 
         val result = onRequest(currentPage).also {
             onLoadUpdated(LoadingType.Done)
