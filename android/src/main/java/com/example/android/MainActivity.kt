@@ -5,7 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.material.MaterialTheme
-import feature.home.HomeScreen
+import domain.model.Character
+import feature.details.DetailsScreen
 import feature.home.HomeViewModel
 
 class MainActivity : ComponentActivity() {
@@ -17,7 +18,21 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             MaterialTheme {
-                HomeScreen(viewModel)
+                DetailsScreen(
+                    character = Character(
+                        id = 0,
+                        name = "Rick Sanchez",
+                        status = "Alive",
+                        species = "Human",
+                        gender = "Male",
+                        imageUrl = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+                        origin = Character.Origin(
+                            name = "Earth",
+                            url = "https://rickandmortyapi.com/api/location/1"
+                        ),
+                        url = "https://rickandmortyapi.com/api/character/1"
+                    )
+                )
             }
         }
     }

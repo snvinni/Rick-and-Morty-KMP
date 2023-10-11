@@ -54,6 +54,9 @@ kotlin {
         val androidMain by getting {
             dependencies {
 
+                // Compose
+                api("androidx.compose.ui:ui-tooling-preview:1.4.0")
+
                 // Ktor
                 api(libs.ktor.http)
 
