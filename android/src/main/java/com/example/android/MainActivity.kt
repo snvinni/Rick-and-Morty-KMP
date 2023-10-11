@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
                         ),
                         url = "https://rickandmortyapi.com/api/character/1"
                     ),
-                    Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize()
                 )
             }
         }

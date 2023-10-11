@@ -9,7 +9,7 @@ val SubTitleStyle
         fontWeight = FontWeight.SemiBold
     )
 
-val Body
+val BodyStyle
     @Composable get() = typography.body1
 
 val BadgeStyle
