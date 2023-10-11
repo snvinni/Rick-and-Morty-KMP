@@ -5,6 +5,9 @@ plugins {
     alias(libs.plugins.compose.multiplatform.wasm)
 }
 
+group = "com.example.web"
+version = "1.0-SNAPSHOT"
+
 @OptIn(ExperimentalWasmDsl::class)
 kotlin {
 
@@ -29,4 +32,9 @@ kotlin {
 
 compose.experimental {
     web.application {}
+}
+
+compose {
+    kotlinCompilerPlugin.set("1.4.0-dev-wasm09")
+    kotlinCompilerPluginArgs.add("suppressKotlinVersionCompatibilityCheck=1.9.0")
 }
