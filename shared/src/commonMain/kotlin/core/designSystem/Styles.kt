@@ -4,7 +4,7 @@ import androidx.compose.material.MaterialTheme.typography
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontWeight
 
-val SubTitle
+val SubTitleStyle
     @Composable get() = typography.subtitle1.copy(
         fontWeight = FontWeight.SemiBold
     )

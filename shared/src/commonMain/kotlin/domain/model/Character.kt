@@ -8,13 +8,14 @@ data class Character(
     val name: String,
     val status: String,
     val species: String,
-    val origin : Origin,
+    val origin: Location,
+    val location: Location,
     val gender: String,
     val imageUrl: String,
     val url: String
 ) {
     @Serializable
-    data class Origin(
+    data class Location(
         val name: String,
         val url: String
     )
