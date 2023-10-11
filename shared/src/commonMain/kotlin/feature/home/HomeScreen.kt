@@ -1,11 +1,10 @@
 package feature.home
 
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -14,9 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import core.util.ImageRequest
 import core.util.Resource
+import core.util.navigation.Action
 
 @Composable
-fun HomeScreen(viewModel: HomeViewModel) {
+fun HomeScreen(
+    onAction: (Action) -> Unit,
+    viewModel: HomeViewModel = HomeViewModel()
+) {
 
     val resultState = viewModel.characters.collectAsState()
 
@@ -34,17 +37,23 @@ fun HomeScreen(viewModel: HomeViewModel) {
             }
 
             is Resource.Result.Success -> {
+                BoxWithConstraints {
+                    val size = maxWidth / 3
 
-                LazyColumn {
+                    LazyVerticalGrid(
+                        columns = GridCells.Adaptive(size)
+                    ) {
 
-                    items(result.data) {
-
-                        ImageRequest(
-                            url = it.imageUrl,
-                            modifier = Modifier
-                                .size(100.dp)
-                                .padding(4.dp),
-                        )
+                        items(result.data) {
+                            ImageRequest(
+                                url = it.imageUrl,
+                                modifier = Modifier
+                                    .size(size)
+                                    .padding(4.dp).clickable {
+                                        onAction(Action.OpenDetails(it))
+                                    },
+                            )
+                        }
                     }
                 }
             }

@@ -1,6 +1,7 @@
 package domain.model
 
 import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.descriptors.PrimitiveKind
 import kotlinx.serialization.descriptors.PrimitiveSerialDescriptor
@@ -15,8 +16,10 @@ data class Character(
     val species: String,
     val origin: Location,
     val location: Location,
+    @SerialName("episode")
     val episodes: List<Episode>,
     val gender: String,
+    @SerialName("image")
     val imageUrl: String,
     val url: String
 ) {

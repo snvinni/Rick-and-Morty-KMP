@@ -1,14 +1,13 @@
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.window.CanvasBasedWindow
-import feature.home.HomeScreen
-import feature.home.HomeViewModel
+import feature.app.App
+import feature.app.AppViewModel
 
 @OptIn(ExperimentalComposeUiApi::class)
 fun main() {
-
-    val viewModel = HomeViewModel()
-
-    CanvasBasedWindow("Test") {
-        HomeScreen(viewModel)
+    CanvasBasedWindow {
+        App(AppViewModel(), Modifier.fillMaxSize())
     }
 }

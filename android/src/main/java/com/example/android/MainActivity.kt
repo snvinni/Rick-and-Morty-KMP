@@ -7,43 +7,19 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.ui.Modifier
-import domain.model.Character
-import feature.details.DetailsScreen
-import feature.home.HomeViewModel
+import feature.app.App
+import feature.app.AppViewModel
 
 class MainActivity : ComponentActivity() {
 
-    private val viewModel by viewModels<HomeViewModel>()
+    private val viewModel by viewModels<AppViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
             MaterialTheme {
-                DetailsScreen(
-                    character = Character(
-                        id = 0,
-                        name = "Rick Sanchez",
-                        status = "Alive",
-                        species = "Human",
-                        gender = "Male",
-                        imageUrl = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-                        origin = Character.Location(
-                            name = "Earth",
-                            url = "https://rickandmortyapi.com/api/location/1"
-                        ),
-                        location = Character.Location(
-                            name = "Earth",
-                            url = "https://rickandmortyapi.com/api/location/1"
-                        ),
-                        url = "https://rickandmortyapi.com/api/character/1",
-                        episodes = listOf(
-                            Character.Episode("https://rickandmortyapi.com/api/episode/1"),
-                            Character.Episode("https://rickandmortyapi.com/api/episode/2")
-                        )
-                    ),
-                    modifier = Modifier.fillMaxSize()
-                )
+                App(viewModel, Modifier.fillMaxSize())
             }
         }
     }
