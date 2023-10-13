@@ -3,7 +3,7 @@ package domain.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Characters(
+data class Character(
     val id: Int,
     val name: String,
     val status: String,
