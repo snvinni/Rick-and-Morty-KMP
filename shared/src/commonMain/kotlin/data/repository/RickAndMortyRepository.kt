@@ -3,24 +3,22 @@ package data.repository
 import core.util.Resource
 import core.util.mapError
 import core.util.mapSuccess
+import data.response.CharactersResponse
 import data.service.RickAndMortyService
-import domain.model.Character
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+
 
 class RickAndMortyRepository(
     private val service: RickAndMortyService = RickAndMortyService()
 ) {
 
-    fun getCharacters(page: Int): Flow<Resource<List<Character>, String>> {
-
+    fun getCharacters(page: Int): Flow<Resource.Result<CharactersResponse, String>> {
         return flow {
 
-            emit(Resource.Loading)
-
             val results = service.getCharacters(page = page)
-                .mapSuccess { it.results }
-                .mapError { it.message ?: "error" }
+                .mapSuccess { it }
+                .mapError { it.message ?: "Error" }
 
             emit(results)
         }
