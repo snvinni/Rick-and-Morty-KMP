@@ -1,11 +1,13 @@
 package feature.home
 
-import core.util.Resource
 import core.viewmodel.BaseViewModel
 import data.repository.RickAndMortyRepository
 import domain.model.Character
 import feature.paginator.LoadingType
 import feature.paginator.Paginator
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
@@ -14,30 +16,23 @@ class HomeViewModel(
 ) : BaseViewModel() {
 
     private val currentPage = MutableStateFlow(1)
-    private val characterList = MutableStateFlow(emptyList<Character>())
+    private val characters = MutableStateFlow(emptyList<Character>())
     private val loadingType = MutableStateFlow<LoadingType>(LoadingType.FirstPage)
-    private val loadError = MutableStateFlow("")
 
     val uiState = combine(
-        currentPage,
-        characterList,
+        characters,
         loadingType,
-        loadError,
-    ) { currentPage, characterList, loadingType, loadError ->
+    ) { characterList, loadingType ->
         HomeUiState(
-            characterList = characterList,
+            characterList = characterList.toImmutableList(),
             loadingType = loadingType,
-            loadError = loadError,
-            currentPage = currentPage
         )
     }.stateIn(
         scope = scope,
         started = SharingStarted.WhileSubscribed(),
         initialValue = HomeUiState(
-            characterList = emptyList(),
+            characterList = persistentListOf(),
             loadingType = LoadingType.FirstPage,
-            loadError = "",
-            currentPage = 1
         )
     )
 
@@ -56,7 +51,7 @@ class HomeViewModel(
             currentPage.value + 1
         },
         onSuccess = { itemList, newPage ->
-            characterList.update { it + itemList.results }
+            characters.update { it + itemList.results }
             currentPage.update { newPage }
         },
         onError = { _ ->
@@ -79,15 +74,13 @@ class HomeViewModel(
     }
 
     fun refresh() {
-        characterList.value = emptyList()
+        characters.value = emptyList()
         pagination.reset()
         loadCharacters()
     }
 }
 
 data class HomeUiState(
-    val characterList: List<Character>,
+    val characterList: ImmutableList<Character>,
     val loadingType: LoadingType,
-    val loadError: String,
-    val currentPage: Int,
 )

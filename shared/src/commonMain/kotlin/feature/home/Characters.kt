@@ -10,7 +10,9 @@ import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
+import androidx.compose.material.Card
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -21,101 +23,51 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import core.designSystem.PaginationLoading
-import core.theme.Green
 import core.util.ImageRequest
 import domain.model.Character
 import feature.paginator.LoadingType
 
-@Composable
-fun CharacterContent(
-    modifier: Modifier = Modifier,
-    onItemClick: (Character) -> Unit = {},
-    characters: List<Character> = emptyList(),
-    loadingType: LoadingType,
-    loadMore: () -> Unit = {},
-    refresh: () -> Unit = {},
-) {
-    Surface(
-        modifier = modifier,
-        color = Color.White
-    ) {
-        when {
-            loadingType is LoadingType.FirstPage && characters.isEmpty() -> {
-                PaginationLoading(loadingType)
-            }
-
-            loadingType is LoadingType.Error -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp),
-                    contentAlignment = Alignment.Center
-                ) {
-                    OutlinedButton(
-                        colors = ButtonDefaults.outlinedButtonColors(
-                            contentColor = Green
-                        ),
-                        onClick = { refresh() },
-                    ) {
-                        Text("Retry")
-                    }
-                }
-            }
-
-            else -> CharacterList(
-                characters = characters,
-                onItemClick = onItemClick,
-                loadingType = loadingType,
-                loadMore = loadMore,
-                modifier = modifier
-            )
-        }
-    }
-}
-
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun CharacterList(
+fun Characters(
     characters: List<Character>,
     onItemClick: (Character) -> Unit = {},
     loadingType: LoadingType,
     loadMore: () -> Unit = {},
     modifier: Modifier
+) = LazyVerticalStaggeredGrid(
+    columns = StaggeredGridCells.Adaptive(190.dp),
+    modifier = modifier
 ) {
-    LazyVerticalStaggeredGrid(
-        columns = StaggeredGridCells.Adaptive(190.dp),
-        modifier = modifier
-    ) {
 
-        items(characters.size) {
-            val character = characters[it]
+    items(characters.size) {
+        val character = characters[it]
 
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-                    .clickable {
-                        onItemClick(character)
-                    },
-                contentAlignment = Alignment.Center
-            ) {
-                CharacterItem(
-                    character = character,
-                    onItemClick = onItemClick
-                )
-            }
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+                .clickable {
+                    onItemClick(character)
+                },
+            contentAlignment = Alignment.Center
+        ) {
+            CharacterItem(
+                character = character,
+                onItemClick = onItemClick
+            )
         }
+    }
 
-        item(span = StaggeredGridItemSpan.FullLine) {
+    item(span = StaggeredGridItemSpan.FullLine) {
 
-            PaginationLoading(loadingType)
+        PaginationLoading(loadingType)
 
-            Spacer(Modifier.size(16.dp))
+        Spacer(Modifier.size(16.dp))
 
-            if (loadingType is LoadingType.FirstPage || loadingType is LoadingType.NextPage) {
-                LaunchedEffect(Unit) {
-                    loadMore()
-                }
+        if (loadingType is LoadingType.FirstPage || loadingType is LoadingType.NextPage) {
+            LaunchedEffect(Unit) {
+                loadMore()
             }
         }
     }

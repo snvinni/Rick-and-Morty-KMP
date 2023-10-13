@@ -44,6 +44,9 @@ kotlin {
                 // Serialization
                 api(libs.kotlinx.serialization.json)
 
+                // Immutable collections
+                api("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.4-wasm0")
+
                 // Ktor
                 api(libs.ktor.core.wasm)
             }
