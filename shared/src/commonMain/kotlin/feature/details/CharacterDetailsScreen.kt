@@ -54,7 +54,7 @@ fun CharacterDetailsScreen(
         Section(title = "Locations", Modifier.fillMaxWidth()) {
             Location(
                 type = "Origin",
-                character.location,
+                character.origin,
                 onNavigate
             )
 
