@@ -15,25 +15,27 @@ class AppViewModel : BaseViewModel() {
     private val stack = Stack()
     val hasBackStack = stack.hasBackStack
 
-    fun onDetailsAction(onNavigate: Navigate) {
-        when (onNavigate) {
+    fun onNavigate(navigate: Navigate) {
+        when (navigate) {
             is Navigate.EpisodeDetails -> {
-                navigateTo(
-                    Screen.EpisodeDetails(onNavigate.episode)
-                )
+//                navigateTo(
+//                    Screen.EpisodeDetails(navigate.episode)
+//                )
             }
 
             is Navigate.LocationDetails -> {
-                navigateTo(
-                    Screen.LocationDetails(onNavigate.location)
-                )
+//                navigateTo(
+//                    Screen.LocationDetails(navigate.location)
+//                )
             }
 
             is Navigate.CharacterDetails -> {
                 navigateTo(
-                    Screen.CharacterDetails(onNavigate.character)
+                    Screen.CharacterDetails(navigate.character)
                 )
             }
+
+            Navigate.Back -> onBack()
         }
     }
 
