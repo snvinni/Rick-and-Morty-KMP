@@ -22,13 +22,11 @@ import feature.home.HomeScreen
 @Composable
 fun App(
     modifier: Modifier = Modifier,
-    viewModel: AppViewModel = ProvideViewModel.provide()
+    viewModel: AppViewModel = ProvideViewModel.provideAppViewModel()
 ) = Column(modifier = modifier) {
 
     val hasBackStack = viewModel.hasBackStack.collectAsState(false).value
     val screen = viewModel.currentScreen.collectAsState().value
-
-    val charactersState = rememberLazyStaggeredGridState()
 
     if (hasBackStack) {
         TopAppBar(
@@ -52,6 +50,8 @@ fun App(
             navigationIcon = null
         )
     }
+
+    val charactersState = rememberLazyStaggeredGridState()
 
     when (screen) {
         is Screen.Home -> HomeScreen(

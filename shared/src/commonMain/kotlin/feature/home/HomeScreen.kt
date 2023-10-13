@@ -24,7 +24,7 @@ import core.viewmodel.ProvideViewModel
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = ProvideViewModel.provide(),
+    viewModel: HomeViewModel = ProvideViewModel.provideHomeViewModel(),
     charactersState: LazyStaggeredGridState = rememberLazyStaggeredGridState(),
     onAction: (Navigate) -> Unit = {},
 ) = Box(
