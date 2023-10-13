@@ -90,6 +90,8 @@ fun CharacterItem(
 
         CharacterDetails(character)
 
+        Spacer(Modifier.height(8.dp))
+
         Text(
             text = character.name,
             style = MaterialTheme.typography.h6
