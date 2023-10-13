@@ -1,8 +1,8 @@
 package core.viewmodel
 
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.Dispatchers
 
 actual open class BaseViewModel actual constructor() {
-    actual val scope: CoroutineScope = MainScope()
+    actual val scope: CoroutineScope = CoroutineScope(Dispatchers.Default)
 }
