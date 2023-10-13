@@ -1,4 +1,4 @@
-package core.component
+package feature.home
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -11,8 +11,6 @@ import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.twotone.Bolt
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -20,17 +18,18 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import core.designSystem.PaginationLoading
 import core.theme.Green
+import core.util.ImageRequest
 import domain.model.Character
 import feature.paginator.LoadingType
 
 @Composable
 fun CharacterContent(
     modifier: Modifier = Modifier,
-    onItemClick: (Int) -> Unit = {},
+    onItemClick: (Character) -> Unit = {},
     characters: List<Character> = emptyList(),
     loadingType: LoadingType,
     loadMore: () -> Unit = {},
@@ -40,12 +39,9 @@ fun CharacterContent(
         modifier = modifier,
         color = Color.White
     ) {
-
         when {
-            (loadingType is LoadingType.FirstPage && characters.isEmpty()) -> {
-                PaginationLoading(
-                    loadingType = loadingType
-                )
+            loadingType is LoadingType.FirstPage && characters.isEmpty() -> {
+                PaginationLoading(loadingType)
             }
 
             loadingType is LoadingType.Error -> {
@@ -66,7 +62,7 @@ fun CharacterContent(
                 }
             }
 
-            else -> ChracterList(
+            else -> CharacterList(
                 characters = characters,
                 onItemClick = onItemClick,
                 loadingType = loadingType,
@@ -79,9 +75,9 @@ fun CharacterContent(
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ChracterList(
+fun CharacterList(
     characters: List<Character>,
-    onItemClick: (Int) -> Unit = {},
+    onItemClick: (Character) -> Unit = {},
     loadingType: LoadingType,
     loadMore: () -> Unit = {},
     modifier: Modifier
@@ -91,23 +87,6 @@ fun ChracterList(
         modifier = modifier
     ) {
 
-        item(
-            span = StaggeredGridItemSpan.FullLine
-        ) {
-            Spacer(modifier = Modifier.size(8.dp))
-
-            Text(
-                text = "Rick and Morty",
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.h4,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp)
-            )
-
-            Spacer(modifier = Modifier.size(8.dp))
-        }
-
         items(characters.size) {
             val character = characters[it]
 
@@ -116,7 +95,7 @@ fun ChracterList(
                     .fillMaxWidth()
                     .padding(8.dp)
                     .clickable {
-                        onItemClick(character.id)
+                        onItemClick(character)
                     },
                 contentAlignment = Alignment.Center
             ) {
@@ -127,15 +106,11 @@ fun ChracterList(
             }
         }
 
-        item(
-            span = StaggeredGridItemSpan.FullLine
+        item(span = StaggeredGridItemSpan.FullLine) {
 
-        ) {
-            PaginationLoading(
-                loadingType = loadingType
-            )
+            PaginationLoading(loadingType)
 
-            Spacer(modifier = Modifier.size(16.dp))
+            Spacer(Modifier.size(16.dp))
 
             if (loadingType is LoadingType.FirstPage || loadingType is LoadingType.NextPage) {
                 LaunchedEffect(Unit) {
@@ -150,14 +125,14 @@ fun ChracterList(
 fun CharacterItem(
     modifier: Modifier = Modifier,
     character: Character,
-    onItemClick: (Int) -> Unit = {}
+    onItemClick: (Character) -> Unit = {}
 ) {
     Card(
         backgroundColor = Color.White,
         shape = RoundedCornerShape(8.dp),
         modifier = modifier.padding(8.dp)
             .clickable {
-                onItemClick(character.id)
+                onItemClick(character)
             },
         elevation = 8.dp
     ) {
@@ -166,8 +141,7 @@ fun CharacterItem(
             horizontalAlignment = CenterHorizontally
         ) {
             ImageRequest(
-                url = character.image,
-                loading = Icons.TwoTone.Bolt,
+                url = character.imageUrl,
                 modifier = Modifier
                     .size(100.dp)
                     .clip(CircleShape)

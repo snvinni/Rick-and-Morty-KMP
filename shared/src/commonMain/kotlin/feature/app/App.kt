@@ -12,14 +12,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import core.util.navigation.Screen
-import feature.details.DetailsScreen
+import core.viewmodel.ProvideViewModel
+import feature.details.CharacterDetailsScreen
 import feature.home.HomeScreen
-
 
 @Composable
 fun App(
-    viewModel: AppViewModel,
-    modifier: Modifier
+    modifier: Modifier = Modifier,
+    viewModel: AppViewModel = ProvideViewModel.provide()
 ) = Column(modifier = modifier) {
 
     val hasBackStack = viewModel.hasBackStack.collectAsState(false).value
@@ -54,9 +54,8 @@ fun App(
         )
 
         is Screen.CharacterDetails -> {
-            DetailsScreen(
+            CharacterDetailsScreen(
                 character = screen.character,
-                action = viewModel::onDetailsAction,
                 modifier = Modifier.fillMaxSize()
             )
         }

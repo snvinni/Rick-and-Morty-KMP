@@ -21,15 +21,15 @@ import core.designSystem.LinkColor
 import core.designSystem.SimpleBadge
 import core.designSystem.SubTitleStyle
 import core.util.ImageRequest
-import core.util.navigation.Action
+import core.util.navigation.Navigate
 import domain.model.Character
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun DetailsScreen(
+fun CharacterDetailsScreen(
     character: Character,
     modifier: Modifier = Modifier,
-    action: (Action) -> Unit,
+    action: (Navigate) -> Unit = {},
 ) = Column(
     modifier = modifier,
     horizontalAlignment = Alignment.CenterHorizontally,
@@ -90,7 +90,7 @@ fun DetailsScreen(
                         shape = CircleShape,
                         modifier = Modifier.size(28.dp),
                         onClick = {
-                            action(Action.OpenEpisode(episode))
+                            action(Navigate.EpisodeDetails(episode))
                         }
                     ) {
                         Box(contentAlignment = Alignment.Center) {
@@ -131,7 +131,7 @@ fun Section(
 fun Location(
     type: String,
     location: Character.Location,
-    action: (Action) -> Unit,
+    action: (Navigate) -> Unit,
     modifier: Modifier = Modifier
 ) = Row(modifier) {
 
@@ -140,7 +140,7 @@ fun Location(
     Text(
         location.name,
         Modifier.clickable {
-            action(Action.OpenLocation(location))
+            action(Navigate.LocationDetails(location))
         },
         style = BodyStyle.copy(color = LinkColor)
     )

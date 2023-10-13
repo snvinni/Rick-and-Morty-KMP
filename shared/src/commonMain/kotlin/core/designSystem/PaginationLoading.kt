@@ -1,22 +1,19 @@
-package core.component
+package core.designSystem
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.unit.dp
-import androidx.compose.foundation.layout.*
 import core.theme.Green
 import feature.paginator.LoadingType
 
 @Composable
-fun PaginationLoading(
-    loadingType: LoadingType
-) {
+fun PaginationLoading(loadingType: LoadingType) {
+
     when (loadingType) {
         LoadingType.NextPage -> {
             LinearProgressIndicator(
@@ -37,6 +34,6 @@ fun PaginationLoading(
             )
         }
 
-        else -> Box(modifier = Modifier.size(0.dp))
+        else -> Unit
     }
 }

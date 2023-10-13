@@ -83,10 +83,6 @@ class HomeViewModel(
         pagination.reset()
         loadCharacters()
     }
-
-    fun onItemClick(i: Int) {
-        TODO("Not yet implemented")
-    }
 }
 
 data class HomeUiState(

@@ -1,6 +1,6 @@
 package feature.app
 
-import core.util.navigation.Action
+import core.util.navigation.Navigate
 import core.util.navigation.Screen
 import core.util.navigation.Stack
 import core.viewmodel.BaseViewModel
@@ -15,23 +15,23 @@ class AppViewModel : BaseViewModel() {
     private val stack = Stack()
     val hasBackStack = stack.hasBackStack
 
-    fun onDetailsAction(onAction: Action) {
-        when (onAction) {
-            is Action.OpenEpisode -> {
+    fun onDetailsAction(onNavigate: Navigate) {
+        when (onNavigate) {
+            is Navigate.EpisodeDetails -> {
                 navigateTo(
-                    Screen.EpisodeDetails(onAction.episode)
+                    Screen.EpisodeDetails(onNavigate.episode)
                 )
             }
 
-            is Action.OpenLocation -> {
+            is Navigate.LocationDetails -> {
                 navigateTo(
-                    Screen.LocationDetails(onAction.location)
+                    Screen.LocationDetails(onNavigate.location)
                 )
             }
 
-            is Action.OpenDetails -> {
+            is Navigate.CharacterDetails -> {
                 navigateTo(
-                    Screen.CharacterDetails(onAction.character)
+                    Screen.CharacterDetails(onNavigate.character)
                 )
             }
         }
