@@ -74,6 +74,9 @@ kotlin {
         val desktopMain by getting {
             dependencies {
 
+                // For Dispatchers.Main
+                api("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.6.4")
+
                 // Ktor
                 api(libs.ktor.http)
 
