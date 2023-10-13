@@ -83,4 +83,10 @@ class HomeViewModel(
 data class HomeUiState(
     val characterList: ImmutableList<Character>,
     val loadingType: LoadingType,
-)
+) {
+    val mustShowGlobalError = characterList.isEmpty() &&
+            loadingType is LoadingType.Error
+
+    val mustShowGlobalLoading = characterList.isEmpty() &&
+            loadingType is LoadingType.FirstPage
+}

@@ -15,7 +15,6 @@ import core.designSystem.PaginationLoading
 import core.theme.Green
 import core.util.navigation.Navigate
 import core.viewmodel.ProvideViewModel
-import feature.paginator.LoadingType
 
 
 @Composable
@@ -28,14 +27,16 @@ fun HomeScreen(
     modifier = modifier
 ) {
 
-    val (characters, loadingType) = viewModel.uiState.collectAsState().value
+    val homeUiState = viewModel.uiState.collectAsState().value
+
+    val (characters, loadingType) = homeUiState
 
     when {
-        loadingType is LoadingType.FirstPage && characters.isEmpty() -> {
+        homeUiState.mustShowGlobalLoading -> {
             PaginationLoading(loadingType)
         }
 
-        loadingType is LoadingType.Error -> {
+        homeUiState.mustShowGlobalError -> {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -53,14 +54,16 @@ fun HomeScreen(
             }
         }
 
-        else -> Characters(
-            modifier = Modifier.fillMaxSize(),
-            characters = characters,
-            onItemClick = {
-                onAction(Navigate.CharacterDetails(it))
-            },
-            loadingType = loadingType,
-            loadMore = viewModel::loadCharacters,
-        )
+        else -> {
+            Characters(
+                modifier = Modifier.fillMaxSize(),
+                characters = characters,
+                onItemClick = {
+                    onAction(Navigate.CharacterDetails(it))
+                },
+                loadingType = loadingType,
+                loadMore = viewModel::loadCharacters,
+            )
+        }
     }
 }

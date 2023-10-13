@@ -1,6 +1,5 @@
 package feature.details
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -12,15 +11,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import core.designSystem.BodyStyle
+import core.designSystem.CharacterDetails
 import core.designSystem.LinkColor
-import core.designSystem.SimpleBadge
 import core.designSystem.SubTitleStyle
-import core.util.ImageRequest
 import core.util.navigation.Navigate
 import domain.model.Character
 
@@ -37,21 +33,7 @@ fun CharacterDetailsScreen(
 
     Spacer(Modifier.height(16.dp))
 
-    Box {
-        ImageRequest(
-            character.imageUrl,
-            Modifier.size(100.dp)
-                .clip(CircleShape)
-                .background(Color.Gray),
-        )
-
-        SimpleBadge(Modifier.align(Alignment.BottomEnd)) {
-            Text(
-                character.status,
-                Modifier.padding(4.dp)
-            )
-        }
-    }
+    CharacterDetails(character)
 
     Spacer(Modifier.height(16.dp))
 
@@ -109,6 +91,7 @@ fun CharacterDetailsScreen(
 
     Spacer(Modifier.height(16.dp))
 }
+
 
 @Composable
 fun Section(
