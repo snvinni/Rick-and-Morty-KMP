@@ -1,8 +1,11 @@
 package feature.home
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
+import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.OutlinedButton
 import androidx.compose.material.Text
@@ -17,11 +20,13 @@ import core.util.navigation.Navigate
 import core.viewmodel.ProvideViewModel
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = ProvideViewModel.provide(),
-    onAction: (Navigate) -> Unit = {}
+    charactersState: LazyStaggeredGridState = rememberLazyStaggeredGridState(),
+    onAction: (Navigate) -> Unit = {},
 ) = Box(
     contentAlignment = Alignment.Center,
     modifier = modifier
@@ -63,6 +68,7 @@ fun HomeScreen(
                 },
                 loadingType = loadingType,
                 loadMore = viewModel::loadCharacters,
+                state = charactersState
             )
         }
     }

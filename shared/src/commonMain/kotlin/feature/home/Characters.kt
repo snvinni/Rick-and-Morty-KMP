@@ -2,10 +2,7 @@ package feature.home
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
-import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.lazy.staggeredgrid.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
@@ -29,13 +26,15 @@ import kotlinx.collections.immutable.ImmutableList
 fun Characters(
     characters: ImmutableList<Character>,
     modifier: Modifier = Modifier,
+    state: LazyStaggeredGridState = rememberLazyStaggeredGridState(),
     onItemClick: (Character) -> Unit = {},
     loadingType: LoadingType,
     loadMore: () -> Unit = {}
 ) {
     LazyVerticalStaggeredGrid(
         columns = StaggeredGridCells.Adaptive(190.dp),
-        modifier = modifier.padding(horizontal = 4.dp)
+        modifier = modifier.padding(horizontal = 4.dp),
+        state = state
     ) {
 
         item(span = StaggeredGridItemSpan.FullLine) {
@@ -53,9 +52,12 @@ fun Characters(
 
         item(span = StaggeredGridItemSpan.FullLine) {
 
-            PaginationLoading(loadingType)
+            Spacer(Modifier.size(8.dp))
 
-            Spacer(Modifier.size(16.dp))
+            PaginationLoading(
+                loadingType,
+                Modifier.padding(16.dp)
+            )
 
             if (loadingType is LoadingType.FirstPage || loadingType is LoadingType.NextPage) {
                 LaunchedEffect(Unit) {

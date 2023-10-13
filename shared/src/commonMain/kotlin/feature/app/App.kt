@@ -1,7 +1,9 @@
 package feature.app
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
@@ -16,6 +18,7 @@ import core.viewmodel.ProvideViewModel
 import feature.details.CharacterDetailsScreen
 import feature.home.HomeScreen
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun App(
     modifier: Modifier = Modifier,
@@ -24,6 +27,8 @@ fun App(
 
     val hasBackStack = viewModel.hasBackStack.collectAsState(false).value
     val screen = viewModel.currentScreen.collectAsState().value
+
+    val charactersState = rememberLazyStaggeredGridState()
 
     if (hasBackStack) {
         TopAppBar(
@@ -51,6 +56,8 @@ fun App(
     when (screen) {
         is Screen.Home -> HomeScreen(
             onAction = viewModel::onDetailsAction,
+            charactersState = charactersState,
+            modifier = Modifier.fillMaxSize()
         )
 
         is Screen.CharacterDetails -> {

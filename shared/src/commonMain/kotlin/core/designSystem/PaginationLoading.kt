@@ -1,36 +1,34 @@
 package core.designSystem
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.unit.dp
 import core.theme.Green
 import feature.paginator.LoadingType
 
 @Composable
-fun PaginationLoading(loadingType: LoadingType) {
+fun PaginationLoading(
+    loadingType: LoadingType,
+    modifier: Modifier = Modifier
+) {
 
     when (loadingType) {
         LoadingType.NextPage -> {
             LinearProgressIndicator(
                 color = Green,
-                modifier = Modifier
-                    .scale(0.5f)
-                    .fillMaxSize()
+                modifier = modifier,
+                strokeCap = StrokeCap.Round
             )
         }
 
         LoadingType.FirstPage -> {
             CircularProgressIndicator(
                 color = Green,
-                modifier = Modifier
-                    .scale(0.2f)
-                    .padding(16.dp)
-                    .fillMaxSize()
+                modifier = modifier,
+                strokeWidth = 2.dp
             )
         }
 
