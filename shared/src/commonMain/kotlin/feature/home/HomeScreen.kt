@@ -1,31 +1,75 @@
 package feature.home
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.staggeredgrid.LazyStaggeredGridState
+import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
+import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.OutlinedButton
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import core.component.CharacterContent
+import androidx.compose.ui.unit.dp
+import core.designSystem.PaginationLoading
+import core.theme.Green
+import core.util.navigation.Navigate
+import core.viewmodel.ProvideViewModel
 
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreen(viewModel: HomeViewModel) {
-    val uiState = viewModel.uiState.collectAsState().value
+fun HomeScreen(
+    modifier: Modifier = Modifier,
+    viewModel: HomeViewModel = ProvideViewModel.provideHomeViewModel(),
+    charactersState: LazyStaggeredGridState = rememberLazyStaggeredGridState(),
+    onAction: (Navigate) -> Unit = {},
+) = Box(
+    contentAlignment = Alignment.Center,
+    modifier = modifier
+) {
 
-    Box(
-        contentAlignment = Alignment.Center,
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        CharacterContent(
-            modifier = Modifier
-                .fillMaxSize(),
-            characters = uiState.characterList,
-            onItemClick = viewModel::onItemClick,
-            loadingType = uiState.loadingType,
-            loadMore = viewModel::loadCharacters,
-            refresh = viewModel::refresh
-        )
+    val homeUiState = viewModel.uiState.collectAsState().value
+
+    val (characters, loadingType) = homeUiState
+
+    when {
+        homeUiState.mustShowGlobalLoading -> {
+            PaginationLoading(loadingType)
+        }
+
+        homeUiState.mustShowGlobalError -> {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(16.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                OutlinedButton(
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = Green
+                    ),
+                    onClick = { viewModel.refresh() },
+                ) {
+                    Text("Retry")
+                }
+            }
+        }
+
+        else -> {
+            Characters(
+                modifier = Modifier.fillMaxSize(),
+                characters = characters,
+                onItemClick = {
+                    onAction(Navigate.CharacterDetails(it))
+                },
+                loadingType = loadingType,
+                loadMore = viewModel::loadCharacters,
+                state = charactersState
+            )
+        }
     }
 }
