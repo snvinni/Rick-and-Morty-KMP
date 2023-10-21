@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.Button
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
@@ -18,8 +17,6 @@ import core.designSystem.BodyStyle
 import core.designSystem.CharacterDetails
 import core.designSystem.LinkColor
 import core.designSystem.SubTitleStyle
-import core.util.Platform
-import core.util.getPlatform
 import core.util.navigation.Navigate
 import domain.model.Character
 
@@ -93,14 +90,6 @@ fun CharacterDetailsScreen(
     }
 
     Spacer(Modifier.height(16.dp))
-
-    if (getPlatform() == Platform.WASM) {
-        Button(
-             onClick = { onNavigate(Navigate.Back) }
-        ) {
-            Text("voltar")
-        }
-    }
 }
 
 
