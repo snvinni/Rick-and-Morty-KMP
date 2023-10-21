@@ -29,6 +29,10 @@ kotlin {
         browser()
     }
 
+    js(IR) {
+        browser()
+    }
+
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -87,6 +91,8 @@ kotlin {
                 api(compose.desktop.common)
             }
         }
+
+        val jsMain by getting
     }
 }
 

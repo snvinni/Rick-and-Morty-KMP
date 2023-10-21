@@ -13,8 +13,6 @@ import androidx.compose.material.icons.twotone.ArrowBack
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import core.util.Platform
-import core.util.getPlatform
 import core.util.navigation.Screen
 import core.viewmodel.ProvideViewModel
 import feature.details.CharacterDetailsScreen
@@ -30,29 +28,27 @@ fun App(
     val hasBackStack = viewModel.hasBackStack.collectAsState(false).value
     val screen = viewModel.currentScreen.collectAsState().value
 
-    if (getPlatform() != Platform.WASM) {
-        if (hasBackStack) {
-            TopAppBar(
-                title = {
-                    Text(screen.name)
-                },
-                navigationIcon = {
-                    IconButton(onClick = viewModel::onBack) {
-                        Icon(
-                            Icons.TwoTone.ArrowBack,
-                            contentDescription = null
-                        )
-                    }
+    if (hasBackStack) {
+        TopAppBar(
+            title = {
+                Text(screen.name)
+            },
+            navigationIcon = {
+                IconButton(onClick = viewModel::onBack) {
+                    Icon(
+                        Icons.TwoTone.ArrowBack,
+                        contentDescription = null
+                    )
                 }
-            )
-        } else {
-            TopAppBar(
-                title = {
-                    Text(screen.name)
-                },
-                navigationIcon = null
-            )
-        }
+            }
+        )
+    } else {
+        TopAppBar(
+            title = {
+                Text(screen.name)
+            },
+            navigationIcon = null
+        )
     }
 
     val charactersState = rememberLazyStaggeredGridState()
@@ -67,7 +63,6 @@ fun App(
         is Screen.CharacterDetails -> {
             CharacterDetailsScreen(
                 character = screen.character,
-                onNavigate = viewModel::onNavigate,
                 modifier = Modifier.fillMaxSize()
             )
         }
