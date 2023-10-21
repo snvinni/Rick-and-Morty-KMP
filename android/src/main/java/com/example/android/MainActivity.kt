@@ -3,21 +3,19 @@ package com.example.android
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
-import feature.home.HomeScreen
-import feature.home.HomeViewModel
+import androidx.compose.ui.Modifier
+import feature.app.App
 
 class MainActivity : ComponentActivity() {
-
-    private val viewModel by viewModels<HomeViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
             MaterialTheme {
-                HomeScreen(viewModel)
+                App(Modifier.fillMaxSize())
             }
         }
     }

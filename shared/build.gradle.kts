@@ -44,6 +44,9 @@ kotlin {
                 // Serialization
                 api(libs.kotlinx.serialization.json)
 
+                // Immutable collections
+                api("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.4-wasm0")
+
                 // Ktor
                 api(libs.ktor.core.wasm)
             }
@@ -53,6 +56,12 @@ kotlin {
 
         val androidMain by getting {
             dependencies {
+
+                // Compose
+                api("androidx.compose.ui:ui-tooling-preview:1.4.0")
+
+                // For Compose
+                api("androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0")
 
                 // Ktor
                 api(libs.ktor.http)
@@ -64,6 +73,9 @@ kotlin {
 
         val desktopMain by getting {
             dependencies {
+
+                // For Dispatchers.Main
+                api("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.6.4")
 
                 // Ktor
                 api(libs.ktor.http)
