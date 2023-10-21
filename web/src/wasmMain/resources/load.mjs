@@ -1,4 +1,4 @@
-import { instantiate } from './webAppModule.uninstantiated.mjs';
+import { instantiate } from './web.uninstantiated.mjs';
 
 await wasmSetup;
 

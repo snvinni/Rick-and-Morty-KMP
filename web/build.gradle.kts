@@ -13,8 +13,14 @@ kotlin {
 
     wasm {
 
-        // Used in load.mjs
-        moduleName = "webAppModule"
+        moduleName = "web"
+
+        binaries.executable()
+
+        browser()
+    }
+
+    js(IR) {
 
         binaries.executable()
 
@@ -22,11 +28,16 @@ kotlin {
     }
 
     sourceSets {
-        val wasmMain by getting  {
+
+        val commonMain by getting {
             dependencies {
-                implementation(project(":shared"))
+                api(project(":shared"))
             }
         }
+
+        val wasmMain by getting
+
+        val jsMain by getting
     }
 }
 
